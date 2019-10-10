@@ -1,0 +1,190 @@
+Table: domestic
+--------------+-------------+------+-----+---------+---------
+ Field        | Type        | Null | Key | Default | Remarks 
+--------------+-------------+------+-----+---------+---------
+ ID           | INT(10)     | NO   | PRI |         |         
+ DomesticName | VARCHAR(32) | YES  |     |         |         
+--------------+-------------+------+-----+---------+---------
+
+Table: foreigntrade
+--------+-------------+------+-----+---------+---------
+ Field  | Type        | Null | Key | Default | Remarks 
+--------+-------------+------+-----+---------+---------
+ ID     | INT(10)     | NO   | PRI |         |         
+ FtName | VARCHAR(32) | YES  |     |         |         
+--------+-------------+------+-----+---------+---------
+
+Table: version
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ ID            | INT(10)      | NO   | PRI |         | 版本ID    
+ VersionName   | VARCHAR(255) | NO   |     |         | 主版本名    
+ FileID        | INT(10)      | NO   |     |         | 文件ID    
+ MainVersion   | BIT(1)       | NO   |     |         | 是否主版本   
+ VersionNumber | INT(10)      | NO   |     |         | 版本号     
+---------------+--------------+------+-----+---------+---------
+
+Table: branch
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ ID            | INT(10)      | NO   | PRI |         | 分支ID    
+ BranchName    | VARCHAR(255) | NO   |     |         | 分支名     
+ DomainName    | VARCHAR(255) | YES  |     |         |         
+ BranchVersion | VARCHAR(255) | YES  |     |         |         
+ Lock          | VARCHAR(255) | YES  |     |         |         
+ ParamVersion  | VARCHAR(255) | YES  |     |         |         
+ Patch         | BIT(1)       | YES  |     |         |         
+ Composite     | BIT(1)       | YES  |     |         |         
+ Remarks       | VARCHAR(255) | YES  |     |         |         
+ PcbID         | INT(10)      | YES  |     |         |         
+ HwID          | INT(10)      | YES  |     |         |         
+ GsensorID     | INT(10)      | YES  |     |         |         
+ BranchTypeID  | INT(10)      | YES  |     |         |         
+ PfID          | INT(10)      | YES  |     |         |         
+ ProjectID     | INT(10)      | NO   |     |         | 项目ID    
+---------------+--------------+------+-----+---------+---------
+
+Table: branchtype
+-------+-------------+------+-----+---------+---------
+ Field | Type        | Null | Key | Default | Remarks 
+-------+-------------+------+-----+---------+---------
+ ID    | INT(10)     | NO   | PRI |         |         
+ Type  | BIT(1)      | YES  |     |         |         
+ Name  | VARCHAR(32) | YES  |     |         |         
+-------+-------------+------+-----+---------+---------
+
+Table: command
+-------------+------------------+------+-----+---------+---------
+ Field       | Type             | Null | Key | Default | Remarks 
+-------------+------------------+------+-----+---------+---------
+ ID          | INT UNSIGNED(10) | NO   | PRI |         | 指令ID    
+ CommandName | VARCHAR(255)     | YES  |     |         | 指令名     
+ Command     | VARCHAR(255)     | YES  |     |         | 输入的指令   
+ RecvTitle   | VARCHAR(255)     | YES  |     |         | 回复标识头   
+ TitleIndex  | VARCHAR(255)     | YES  |     |         | 回复截取索引  
+ LimitLength | INT UNSIGNED(10) | YES  |     |         | 回复最小长度  
+ StartRange  | INT(10)          | YES  |     |         | 回复参数开始范围
+ EndRange    | INT(10)          | YES  |     |         | 回复参数结束范围
+ ReadORWrite | INT(10)          | NO   |     |         | 区分读取指令或写入指令
+ ReWrite     | INT(10)          | YES  |     |         | 是否重写入终端 
+ ProjectID   | INT(10)          | YES  |     |         | 限制项目ID  
+ BranchID    | INT(10)          | YES  |     |         | 限制分支ID  
+-------------+------------------+------+-----+---------+---------
+
+Table: device
+------------+--------------+------+-----+---------+---------
+ Field      | Type         | Null | Key | Default | Remarks 
+------------+--------------+------+-----+---------+---------
+ ID         | INT(10)      | NO   | PRI |         | 记录ID    
+ ChipRID    | VARCHAR(64)  | NO   |     |         | 芯片RID   
+ IMEI       | VARCHAR(32)  | NO   |     |         | IMEI号   
+ OldVersion | VARCHAR(255) | NO   |     |         | 原终端版本   
+ NewVersion | VARCHAR(255) | NO   |     |         | 新终端版本   
+ Result     | INT(10)      | NO   |     |         | 烧写结果    
+ ErrorCode  | INT(10)      | YES  |     |         | 错误代码    
+ ResultTime | DATETIME(19) | YES  |     |         | 记录时间    
+------------+--------------+------+-----+---------+---------
+
+Table: file
+-----------+--------------+------+-----+---------+---------
+ Field     | Type         | Null | Key | Default | Remarks 
+-----------+--------------+------+-----+---------+---------
+ ID        | INT(10)      | NO   | PRI |         | 文件ID    
+ FileName  | VARCHAR(255) | NO   |     |         | 文件名     
+ BranchID  | INT(10)      | NO   |     |         | 项目分支ID  
+ Path      | VARCHAR(255) | NO   |     |         | 文件地址    
+ FileSize  | INT(10)      | NO   |     |         | 文件大小    
+ PackTime  | DATETIME(19) | YES  |     |         |         
+ UpdateLog | TEXT(65535)  | YES  |     |         |         
+-----------+--------------+------+-----+---------+---------
+
+Table: gsensor
+----------------+-------------+------+-----+---------+---------
+ Field          | Type        | Null | Key | Default | Remarks 
+----------------+-------------+------+-----+---------+---------
+ ID             | INT(10)     | NO   | PRI |         |         
+ GsensorVersion | VARCHAR(32) | YES  |     |         |         
+----------------+-------------+------+-----+---------+---------
+
+Table: hardware
+-----------+-------------+------+-----+---------+---------
+ Field     | Type        | Null | Key | Default | Remarks 
+-----------+-------------+------+-----+---------+---------
+ ID        | INT(10)     | NO   | PRI |         |         
+ HwVersion | VARCHAR(32) | YES  |     |         |         
+-----------+-------------+------+-----+---------+---------
+
+Table: operation
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ ID            | INT(10)      | NO   | PRI |         |         
+ OperationName | VARCHAR(255) | NO   |     |         | 操作名     
+---------------+--------------+------+-----+---------+---------
+
+Table: operationversionbind
+-------------+---------+------+-----+---------+---------
+ Field       | Type    | Null | Key | Default | Remarks 
+-------------+---------+------+-----+---------+---------
+ ID          | INT(10) | NO   | PRI |         |         
+ BranchID    | INT(10) | NO   |     |         | 版本ID    
+ OperationID | INT(10) | NO   |     |         | 操作ID    
+-------------+---------+------+-----+---------+---------
+
+Table: pcb
+------------+-------------+------+-----+---------+---------
+ Field      | Type        | Null | Key | Default | Remarks 
+------------+-------------+------+-----+---------+---------
+ ID         | INT(10)     | NO   | PRI |         |         
+ PcbVersion | VARCHAR(32) | YES  |     |         |         
+------------+-------------+------+-----+---------+---------
+
+Table: platform
+-----------+-------------+------+-----+---------+---------
+ Field     | Type        | Null | Key | Default | Remarks 
+-----------+-------------+------+-----+---------+---------
+ ID        | INT(10)     | NO   | PRI |         |         
+ PfVersion | VARCHAR(32) | YES  |     |         |         
+-----------+-------------+------+-----+---------+---------
+
+Table: project
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ ID          | INT(10)      | NO   | PRI |         | 项目ID    
+ ProjectName | VARCHAR(255) | NO   |     |         | 软件项目名   
+-------------+--------------+------+-----+---------+---------
+
+Table: rule
+-----------+-------------+------+-----+---------+---------
+ Field     | Type        | Null | Key | Default | Remarks 
+-----------+-------------+------+-----+---------+---------
+ id        | INT(10)     | NO   | PRI |         |         
+ attribute | VARCHAR(32) | NO   |     |         |         
+ from      | INT(10)     | NO   |     |         |         
+ to        | INT(10)     | NO   |     |         |         
+-----------+-------------+------+-----+---------+---------
+
+Table: type
+--------------+---------------+------+-----+---------+---------
+ Field        | Type          | Null | Key | Default | Remarks 
+--------------+---------------+------+-----+---------+---------
+ id           | INT(10)       | NO   | PRI |         |         
+ typeName     | VARCHAR(16)   | YES  |     |         |         
+ permission   | VARCHAR(1024) | YES  |     |         |         
+ pcPermission | VARCHAR(255)  | YES  |     |         |         
+--------------+---------------+------+-----+---------+---------
+
+Table: user
+----------+-------------+------+-----+---------+---------
+ Field    | Type        | Null | Key | Default | Remarks 
+----------+-------------+------+-----+---------+---------
+ id       | INT(10)     | NO   | PRI |         | ID      
+ name     | VARCHAR(32) | NO   |     |         | 用户名     
+ password | VARCHAR(32) | NO   |     |         | 密码      
+ enable   | BIT(1)      | NO   |     |         | 是否可用    
+ typeId   | INT(10)     | NO   |     |         | 用户类型ID  
+----------+-------------+------+-----+---------+---------
+

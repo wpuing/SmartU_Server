@@ -1,0 +1,191 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.jimi</groupId>
+  <artifactId>SmartU-Server</artifactId>
+  <version>1.5.1</version>
+  <packaging>war</packaging>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<jdk.version>1.8</jdk.version>
+		<junit.version>3.8.1</junit.version>
+		<!-- <jfinal.version>3.4</jfinal.version> -->
+		<cos.version>2017.5</cos.version>
+		<log4j.version>1.2.17</log4j.version>
+		<jfinaljetty.version>9.4.19.v20190610</jfinaljetty.version>
+		<druid.version>1.1.10</druid.version>
+		<mysql.version>5.1.38</mysql.version>
+		<fastjson.version>1.2.49</fastjson.version>
+		<mail.version>1.4.7</mail.version>
+	</properties>
+	
+	<!-- 使用阿里 maven 库 -->
+	<repositories>
+		<repository>
+			<id>ali-maven</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<!-- Maven 自带的中央仓库使用的Id为central 如果其他的仓库声明也是用该Id 就会覆盖中央仓库的配置 -->
+			<id>nexus</id>
+			<name>nexus</name>
+			<url>http://10.10.11.90:8081/repository/maven-releases/</url>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jfinal</groupId>
+			<artifactId>cos</artifactId>
+			<version>${cos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jfinaljetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>8.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cc.darhao</groupId>
+			<artifactId>DaUtils</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<!-- 发邮件 -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>${mail.version}</version>
+		</dependency>
+		
+		<!--自选库-->
+		<dependency>
+			<groupId>com.jfinal</groupId>
+			<artifactId>jfinal</artifactId>
+			<version>3.5</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.6</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-lang3</artifactId>
+    		<version>3.8.1</version>
+		</dependency>
+	</dependencies>
+  
+  
+	<build>
+		<finalName>SUServer</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>  
+					<warName>${project.artifactId}-${project.version}</warName>  
+					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>  
+				</configuration>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+			</plugin>
+			<!-- jetty:run 添加jetty插件以便启动 -->
+			 <plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.11.v20180605</version>
+				<configuration>
+					<stopKey>stop</stopKey>
+					<stopPort>5599</stopPort>
+					<webAppConfig>
+						<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>80</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/su_server/</contextPath>
+					</webApp>
+					<httpConnector>
+						<port>80</port>
+						</httpConnector>
+				</configuration>
+			</plugin>
+			<!--配置tomcat7:run 使用tomcat启动-->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>80</port>
+					<path>/${project.artifactId}</path>
+					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
