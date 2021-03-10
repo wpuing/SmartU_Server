@@ -13,7 +13,7 @@
 		<!-- <jfinal.version>3.4</jfinal.version> -->
 		<cos.version>2017.5</cos.version>
 		<log4j.version>1.2.17</log4j.version>
-		<jfinaljetty.version>9.4.19.v20190610</jfinaljetty.version>
+		<jfinaljetty.version>9.4.38.v20210224</jfinaljetty.version>
 		<druid.version>1.1.10</druid.version>
 		<mysql.version>5.1.38</mysql.version>
 		<fastjson.version>1.2.49</fastjson.version>
